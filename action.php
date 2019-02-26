@@ -8,22 +8,26 @@
 </head>
 <body>
 <?php
-$dbc = mysqli_connect('localhost', 'root', '', 'base') OR DIE('Ошибка подключения к базе данных');
-if(isset($_POST['submit'])){
-    $name = mysqli_real_escape_string($dbc, trim($_POST['name']));
-    $mail = mysqli_real_escape_string($dbc, trim($_POST['mail']));
-    if(!empty($name) && !empty($mail)) {
-        $query = "SELECT * FROM `action` WHERE name = '$name', mail = '$mail'";
-        $data = mysqli_query($dbc, $query);
-        if(mysqli_num_rows($data) == 0) {
-            $query ="INSERT INTO `tablo` (name, mail) VALUES ('$name', '$mail')";
-            mysqli_query($dbc,$query);
-            echo 'Данные отправлены';
-            mysqli_close($dbc);
-            exit();
-        }
-    }
+require_once 'base.php'; // подключаем скрипт
+ 
+// подключаемся к серверу
+$link = mysqli_connect($host, $user, $password, $database) 
+    or die("Ошибка " . mysqli_error($link));
+ 
+if (!$link) {
+die("Connection failed: " . mysqli_connect_error());
 }
-?>   
+ 
+$name = strip_tags(trim($_POST['name']));
+$mail = strip_tags(trim($_POST['mail']));
+$sql = "INSERT INTO tablo (name, mail) VALUES ('$name', '$mail')";
+if (mysqli_query($link, $sql)) {
+      
+} else {
+      echo "Error: " . $sql . "<br>" . mysqli_error($link);
+}
+mysqli_close($link);
+        
+?>
 </body>
 </html>

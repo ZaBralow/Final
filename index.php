@@ -98,9 +98,12 @@
   <input type="text" placeholder="Email" name="mail" id="input">
 </div>
 
-<input type="submit" value="SUBMIT -->" class="full2" name="submit"></input>
+<input type="submit" value="SUBMIT -->" class="full2" name="submit" id="btn"></input>
 </form>
 
+<?php
+require_once 'action.php'
+?>
 
 
 
